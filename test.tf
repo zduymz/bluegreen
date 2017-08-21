@@ -26,8 +26,7 @@ resource "aws_key_pair" "builder" {
   # Use our provider for the build
   provider = "aws.build"
   key_name   = "builder-key-${var.build_id}"
-  public_key = "${file("/var/lib/jenkins/.ssh/id_rsa.pub")}"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4l0SJHhsm4IVQ8j0JeIy8XKfYaVpUj+VY0C1d8r9R/RAus20UrF2bBshiR9hWt3d8P411WtfHteKHSzhFM2E4I6+K4h0Ib1Rqf9rnXYr+J8UeI8JqvK7tJvPm3loAD9kc+y+q+Ow5oq1ukAJbR5wHHBWfyE+Rop2i4FT0Nf8IEtYn/TtKkd3SS1FBhOn4mfcnlyyq+24DbPrgHDf6KYwnxLLRBUVs/pV0A1EQ5H377RlC0c3Qm7C7LBLxh2sTV/Utud3ug8dIlujw/gV/g9INQdCl4uvxCZ0KIeBAk/aW+AJEfmBXj8aLFC64eF9+LvXqBT+5YCnG1Sej99sdE1Z ec2-user@ip-172-31-16-30.ec2.internal"
+  public_key = ""
 }
 
 resource "aws_security_group" "aws_sec" {
@@ -92,12 +91,6 @@ data "aws_ami" "optapp" {
 # Describe resource
 resource "aws_instance" "optapp" {
 
-  timeouts {
-	create = "15m"
-	update = "15m"
-	delete = "15m"
-  }
-
   # Use defined build environment
   provider = "aws.build"
 
@@ -112,8 +105,6 @@ resource "aws_instance" "optapp" {
   security_groups = [
    "${aws_security_group.aws_sec.name}"
   ]
-
-
 
 
   # Define tags as needed.
@@ -141,7 +132,7 @@ resource "aws_instance" "optapp" {
       type = "ssh"
       user = "ec2-user"
       # password = ""
-      private_key = "${file("/var/lib/jenkins/.ssh/id_rsa.pub")}"
+      private_key = "${file("/var/lib/jenkins/.ssh/jenkins_key")}"
       # agent = true
     }
   }
@@ -152,7 +143,7 @@ resource "aws_instance" "optapp" {
       type = "ssh"
       user = "ec2-user"
       # password = ""
-      private_key = "${file("/var/lib/jenkins/.ssh/id_rsa.pub")}"
+      private_key = "${file("/var/lib/jenkins/.ssh/jenkins_key")}"
       # agent = true
     }
     inline = [
@@ -171,7 +162,7 @@ resource "aws_instance" "optapp" {
       type = "ssh"
       user = "ec2-user"
       # password = ""
-      private_key = "${file("/var/lib/jenkins/.ssh/id_rsa.pub")}"
+      private_key = "${file("/var/lib/jenkins/.ssh/jenkins_key")}"
       # agent = true
     }
     script = "test.sh"
