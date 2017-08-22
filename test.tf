@@ -26,7 +26,7 @@ resource "aws_key_pair" "builder" {
   # Use our provider for the build
   provider = "aws.build"
   key_name   = "builder-key-${var.build_id}"
-  public_key = ""
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4l0SJHhsm4IVQ8j0JeIy8XKfYaVpUj+VY0C1d8r9R/RAus20UrF2bBshiR9hWt3d8P411WtfHteKHSzhFM2E4I6+K4h0Ib1Rqf9rnXYr+J8UeI8JqvK7tJvPm3loAD9kc+y+q+Ow5oq1ukAJbR5wHHBWfyE+Rop2i4FT0Nf8IEtYn/TtKkd3SS1FBhOn4mfcnlyyq+24DbPrgHDf6KYwnxLLRBUVs/pV0A1EQ5H377RlC0c3Qm7C7LBLxh2sTV/Utud3ug8dIlujw/gV/g9INQdCl4uvxCZ0KIeBAk/aW+AJEfmBXj8aLFC64eF9+LvXqBT+5YCnG1Sej99sdE1Z"
 }
 
 resource "aws_security_group" "aws_sec" {
